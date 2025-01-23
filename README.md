@@ -29,3 +29,96 @@ This project is a **Canteen Point of Sale (POS) System** implemented in C. It pr
 1. Compile the program:
    ```bash
    gcc -o canteenpos canteenpossystem002.c
+Run the executable:
+bash
+Copy
+Edit
+./canteenpos
+Roles and Login
+Manager:
+Enter the role as Manager.
+Use the password: admin123.
+Cashier:
+Enter the role as Cashier (no password required).
+Exit:
+Type Exit to terminate the program.
+Manager Menu Options
+Display the menu.
+Add menu items.
+Restock items.
+Check for low stock (auto-replenishment included).
+Logout.
+Cashier Menu Options
+Display the menu.
+Process customer orders.
+Generate a bill for processed orders.
+Logout.
+File Structure
+menu.txt: Stores menu items in the format:
+php
+Copy
+Edit
+<ID>,<Item Name>,<Price>,<Stock>
+orders.txt: Logs orders in the format:
+mathematica
+Copy
+Edit
+<Order ID>,<Item ID>,<Quantity>,<Total Cost>
+System Design
+Stock Management
+Items with stock below LOW_STOCK_THRESHOLD (default: 5) are flagged.
+Automatically replenishes stock by AUTO_REPLENISH_AMOUNT (default: 20).
+Payment Processing
+Accepts cash payments and calculates change.
+Ensures cash provided is sufficient to cover the total cost.
+Data Persistence
+Menu and order data are saved to files for future use.
+The system loads the menu on startup.
+Code Overview
+main(): Entry point; loads menu and handles login.
+Role Management:
+managerFunctions()
+cashierFunctions()
+Core Functions:
+displayMenu()
+addMenuItem()
+restockItem()
+processOrder()
+generateBill()
+File Operations:
+loadMenuFromFile()
+saveMenuToFile()
+saveOrderToFile()
+Example Usage
+Adding a Menu Item (Manager)
+Login as Manager.
+Select "Add Menu Item".
+Enter item details:
+makefile
+Copy
+Edit
+Name: Coffee
+Price: 2.5
+Stock: 50
+Item is added successfully and saved to menu.txt.
+Processing an Order (Cashier)
+Login as Cashier.
+Select "Process Order".
+Enter order details:
+mathematica
+Copy
+Edit
+Order ID: 101
+Item ID: 1
+Quantity: 2
+Confirm cash payment:
+yaml
+Copy
+Edit
+Total Cost: 5.0
+Cash Given: 10.0
+Change returned and order logged in orders.txt.
+Future Enhancements
+Add support for multiple payment methods.
+Implement graphical user interface (GUI).
+Add analytics and sales reporting.
