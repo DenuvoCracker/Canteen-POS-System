@@ -1,0 +1,26 @@
+void login() {
+    char role[20];
+    char password[20];
+
+    printf("\nEnter role (Manager/Cashier/Exit): \nEnter Exit to end the program\n");
+    scanf("%s", role);
+
+    if (strcmp(role, "Manager") == 0) {
+        printf("Enter manager password: ");
+        scanf("%s", password);
+        if (strcmp(password, "admin123") == 0) {
+            managerFunctions();
+        } else {
+            printf("Invalid password!\n");
+            login();
+        }
+    } else if (strcmp(role, "Cashier") == 0) {
+        cashierFunctions();
+    } else if (strcmp(role, "Exit") == 0) {
+        exit(1);
+    } else {
+        printf("Invalid role! Please enter a valid role.\n");
+        login();
+        return;
+    }
+}
