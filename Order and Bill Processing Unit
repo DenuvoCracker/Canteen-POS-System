@@ -1,0 +1,69 @@
+// Process Order
+void processOrder() {
+    if (menuSize == 0) {
+        printf("The menu is empty. Add items first.\n");
+        return;
+    }
+
+    struct Order newOrder;
+    printf("Enter order ID: ");
+    if (scanf("%d", &newOrder.orderId) != 1 || newOrder.orderId <= 0) {
+        printf("Invalid order ID.\n");
+        return;
+    }
+
+    printf("Enter item ID: ");
+    if (scanf("%d", &newOrder.itemId) != 1 || newOrder.itemId <= 0 || newOrder.itemId > menuSize) {
+        printf("Invalid item ID.\n");
+        return;
+    }
+
+    printf("Enter quantity: ");
+    if (scanf("%d", &newOrder.quantity) != 1 || newOrder.quantity <= 0) {
+        printf("Invalid quantity.\n");
+        return;
+    }
+
+    if (newOrder.quantity > menu[newOrder.itemId - 1].stock) {
+        printf("Insufficient stock.\n");
+        return;
+    }
+
+    newOrder.totalCost = newOrder.quantity * menu[newOrder.itemId - 1].price;
+    menu[newOrder.itemId - 1].stock -= newOrder.quantity;
+    orders[orderCount++] = newOrder;
+
+    saveOrderToFile(newOrder);
+    saveMenuToFile();
+    processCashPayment(newOrder.totalCost);
+    printf("Order processed successfully!\n");
+}
+
+// Process Cash Payment
+void processCashPayment(float totalCost) {
+    float cashGiven, change;
+    printf("\nTotal Cost: %.2f\n", totalCost);
+    printf("Enter cash given: ");
+    if (scanf("%f", &cashGiven) != 1 || cashGiven < totalCost) {
+        printf("Insufficient cash. Order cannot be completed.\n");
+        return;
+    }
+
+    change = cashGiven - totalCost;
+    printf("Change to return: %.2f\n", change);
+}
+
+// Generate Bill
+void generateBill() {
+    if (orderCount == 0) {
+        printf("No orders to generate a bill for.\n");
+        return;
+    }
+
+    printf("\n--- Bill Summary ---\n");
+    printf("Order ID\tItem ID\tQuantity\tTotal Cost\n");
+
+    for (int i = 0; i < orderCount; i++) {
+        printf("%d\t\t%d\t%d\t\t%.2f\n", orders[i].orderId, orders[i].itemId, orders[i].quantity, orders[i].totalCost);
+    }
+}
