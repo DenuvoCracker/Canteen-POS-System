@@ -1,0 +1,85 @@
+// Display Menu
+void displayMenu() {
+    if (menuSize == 0) {
+        printf("The menu is currently empty.\n");
+        return;
+    }
+    printf("\nID\tName\t\tPrice\tStock\n");
+    for (int i = 0; i < menuSize; i++) {
+        printf("%d\t%s\t\t%.2f\t%d\n", menu[i].id, menu[i].name, menu[i].price, menu[i].stock);
+    }
+}
+
+// Add Menu Item
+void addMenuItem() {
+    if (menuSize >= MAX_ITEMS) {
+        printf("Cannot add more items. Menu is full.\n");
+        return;
+    }
+
+    struct MenuItem newItem;
+    newItem.id = menuSize + 1;
+    printf("Enter item name: ");
+    clearInputBuffer();
+    fgets(newItem.name, sizeof(newItem.name), stdin);
+    newItem.name[strcspn(newItem.name, "\n")] = '\0'; // Remove newline
+
+    printf("Enter item price: ");
+    if (scanf("%f", &newItem.price) != 1 || newItem.price < 0) {
+        printf("Invalid price. Operation cancelled.\n");
+        return;
+    }
+
+    printf("Enter item stock: ");
+    if (scanf("%d", &newItem.stock) != 1 || newItem.stock < 0) {
+        printf("Invalid stock. Operation cancelled.\n");
+        return;
+    }
+
+    menu[menuSize++] = newItem;
+    saveMenuToFile();
+    printf("Item added successfully!\n");
+}
+
+// Restock Item
+void restockItem() {
+    int id, restockQuantity;
+    printf("Enter the ID of the item to restock: ");
+    if (scanf("%d", &id) != 1 || id <= 0 || id > menuSize) {
+        printf("Invalid item ID.\n");
+        return;
+    }
+
+    printf("Enter the quantity to restock: ");
+    if (scanf("%d", &restockQuantity) != 1 || restockQuantity < 0) {
+        printf("Invalid quantity.\n");
+        return;
+    }
+
+    menu[id - 1].stock += restockQuantity;
+    saveMenuToFile();
+    printf("Item restocked successfully!\n");
+}
+
+// Check Low Stock
+void checkLowStock() {
+    printf("\n--- Low Stock Items ---\n");
+    int found = 0;
+    for (int i = 0; i < menuSize; i++) {
+        if (menu[i].stock <= LOW_STOCK_THRESHOLD) {
+            printf("ID: %d, Name: %s, Stock: %d\n", menu[i].id, menu[i].name, menu[i].stock);
+            autoReplenishStock(i);
+            found = 1;
+        }
+    }
+    if (!found) {
+        printf("No items with low stock.\n");
+    }
+}
+
+// Auto Replenish Stock
+void autoReplenishStock(int id) {
+    printf("Auto-replenishing stock for %s. Adding %d units.\n", menu[id].name, AUTO_REPLENISH_AMOUNT);
+    menu[id].stock += AUTO_REPLENISH_AMOUNT;
+    saveMenuToFile();
+}
