@@ -1,0 +1,45 @@
+// Load Menu from File
+void loadMenuFromFile() {
+    FILE *file = fopen("menu.txt","r");
+    if (file == NULL) {
+        printf("Menu file not found. Starting with an empty menu.\n");
+        return;
+    }
+
+    menuSize = 0;
+    while (fscanf(file, "%d,%49[^,],%f,%d\n", &menu[menuSize].id, menu[menuSize].name, &menu[menuSize].price, &menu[menuSize].stock) == 4) {
+        menuSize++;
+    }
+    fclose(file);
+}
+
+// Save Menu to File
+void saveMenuToFile() {
+    FILE *file = fopen("menu.txt", "w");
+    if (file == NULL) {
+        printf("Error saving menu to file.\n");
+        return;
+    }
+
+    for (int i = 0; i < menuSize; i++) {
+        fprintf(file, "%d,%s,%.2f,%d\n", menu[i].id, menu[i].name, menu[i].price, menu[i].stock);
+    }
+    fclose(file);
+}
+
+// Save Order to File
+void saveOrderToFile(struct Order order) {
+    FILE *file = fopen("orders.txt", "a");
+    if (file == NULL) {
+        printf("Error saving order to file.\n");
+        return;
+    }
+
+    fprintf(file, "%d,%d,%d,%.2f\n", order.orderId, order.itemId, order.quantity, order.totalCost);
+    fclose(file);
+}
+
+// Clear input buffer
+void clearInputBuffer() {
+    while (getchar() != '\n');
+}
