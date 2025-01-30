@@ -1,3 +1,8 @@
+# Team
+
+**SAMRIDH RAJ**   RVIT24BCS118
+**HRISHIT RAI**   RVIT24BCS097
+
 # Canteen POS System with Role Management
 
 This project is a **Canteen Point of Sale (POS) System** implemented in C. It provides an efficient way to manage menu items, process customer orders, handle payments, and track stock levels. The system includes role-based access control, allowing functionality tailored to **Managers** and **Cashiers**.
