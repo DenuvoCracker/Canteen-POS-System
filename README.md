@@ -1,7 +1,7 @@
 # Team
 
-**SAMRIDH RAJ**   RVIT24BCS118
-**HRISHIT RAI**   RVIT24BCS097
+- **SAMRIDH RAJ**   RVIT24BCS118
+- **HRISHIT RAI**   RVIT24BCS097
 
 # Canteen POS System with Role Management
 
