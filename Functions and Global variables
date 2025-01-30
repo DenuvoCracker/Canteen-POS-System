@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#define MAX_ITEMS 100
+#define MAX_ORDERS 100
+#define LOW_STOCK_THRESHOLD 5
+#define AUTO_REPLENISH_AMOUNT 20
+
+// Structures
+struct MenuItem {
+    int id;
+    char name[50];
+    float price;
+    int stock;
+};
+
+struct Order {
+    int orderId;
+    int itemId;
+    int quantity;
+    float totalCost;
+};
+
+// Global variables
+struct MenuItem menu[MAX_ITEMS];
+int menuSize = 0;
+
+struct Order orders[MAX_ORDERS];
+int orderCount = 0;
+
+// Function prototypes
+void displayMenu();
+void addMenuItem();
+void restockItem();
+void processOrder();
+void generateBill();
+void login();
+void managerFunctions();
+void cashierFunctions();
+void clearInputBuffer();
+void loadMenuFromFile();
+void saveMenuToFile();
+void saveOrderToFile(struct Order order);
+void checkLowStock();
+void autoReplenishStock(int id);
+void processCashPayment(float totalCost);
+
+// Main function
+int main() {
+    printf("\n--- Canteen POS System with Role Management ---\n");
+    loadMenuFromFile();
+    login();
+    return 0;
+}
